@@ -1,0 +1,52 @@
+<div class="d-flex justify-content-around align-items-center h-100 w-100">
+
+    <mat-card class="w-40 h-25">
+
+        <div class="d-flex flex-column justify-content-center align-items-center">
+            <mat-card-header class="align-self-start">
+                <h3 class="text-primary">ورود</h3>
+            </mat-card-header>
+
+            <mat-card-content class="w-100 mt-3">
+
+                <mat-form-field class="w-100">
+                    <input matInput placeholder="شناسه کاربری" [(ngModel)]="privateKey" />
+                </mat-form-field>
+
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-raised-button color="primary" (click)="login(privateKey)">ورود</button>
+            </mat-card-actions>
+        </div>
+
+    </mat-card>
+
+    <mat-card class="w-40 h-25">
+
+        <div class="d-flex flex-column align-items-center justify-content-center">
+            <mat-card-header class="align-self-start">
+                <h3 class="text-primary">عضویت</h3>
+            </mat-card-header>
+
+            <mat-card-content class="w-100 mt-4">
+
+                <div class="d-flex flex-column align-items-start" *ngIf="showWarning">
+                    <span><label class="text-primary">شناسه عضویت : </label> {{walletKeys.privateKey}}</span>
+
+                    <span class="text-warning font-italic">
+                        شناسه ی کاربری شما در سیستم ذخیره نخواهد شد , در صورت مفقود شدن آن اطلاعات قابل بازیابی نمی
+                        باشند
+                    </span>
+                </div>
+
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-raised-button color="primary" (click)="getPrivateKey()">دریافت شناسه کاربری</button>
+            </mat-card-actions>
+        </div>
+
+    </mat-card>
+
+</div>
