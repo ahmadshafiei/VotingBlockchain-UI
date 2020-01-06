@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
   }
 
   login(privateKey: string) {
-    debugger;
     this.profileService.login(privateKey);
     this.router.navigateByUrl('/Dashboard/Profile');
   }

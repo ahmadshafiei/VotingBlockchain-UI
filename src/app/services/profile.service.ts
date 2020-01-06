@@ -16,13 +16,11 @@ export class ProfileService {
   ) { }
 
   login(privateKey: string) {
-
     this.cookieService.set('privateKey', privateKey);
-
   }
 
   logout() {
-    this.cookieService.delete('privateKey');
+    this.cookieService.deleteAll();
   }
 
   getNewWallet() {

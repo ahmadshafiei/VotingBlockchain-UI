@@ -1,16 +1,23 @@
 <div>
     <mat-toolbar color="primary">
 
-        <mat-toolbar-row>
-            <span>پروفایل </span>
-            <span>انتخابات</span>
-            <span class="example-spacer"></span>
+        <mat-toolbar-row class="justify-content-between">
+            <div>
+                <span class="pointer" routerLink="/Dashboard/Profile">پروفایل </span>
+                <span class="mx-5 pointer" routerLink="/Dashboard/Elections">انتخابات</span>
+            </div>
+
+            <div>
+                <span class="pointer" (click)="logout()">
+                    خروج
+                </span>
+            </div>
 
         </mat-toolbar-row>
     </mat-toolbar>
 
 
-    <div class="row">
+    <div class="p-3">
 
         <router-outlet></router-outlet>
 
