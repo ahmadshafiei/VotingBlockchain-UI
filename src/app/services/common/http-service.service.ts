@@ -28,9 +28,6 @@ export class HttpService {
 
   get<TResponse>(url: string, params: {} = {}, showMessage = false): Observable<TResponse> {
 
-    debugger;
-
-
     return this.httpClient.get<TResponse>(this.baseUrl + url, {
       headers: this.httpHeaders,
       params: params,
@@ -43,16 +40,7 @@ export class HttpService {
 
         return data;
 
-      }), catchError<any, any>(error => {
-
-        if (showMessage)
-          this.toastr.error('خطایی در سیستم رخ داد');
-
-        console.log(error);
-
-        return null;
-
-      })
+      }), catchError<any, any>(e => this.handleError(e, showMessage))
 
     );
 
@@ -66,21 +54,13 @@ export class HttpService {
 
       map((data: TResponse) => {
 
+        debugger;
         if (showMessage)
           this.toastr.success('درخواست با موفقیت انجام شد');
 
         return data;
 
-      }), catchError<any, any>(error => {
-
-        if (showMessage)
-          this.toastr.error('خطایی در سیستم رخ داد');
-
-        console.log(error);
-
-        return null;
-
-      })
+      }), catchError<any, any>(e => this.handleError(e, showMessage))
     );
 
   }
@@ -98,32 +78,16 @@ export class HttpService {
 
         return data;
 
-      }), catchError<any, any>(error => {
-
-        if (showMessage)
-          this.toastr.error('خطایی در سیستم رخ داد');
-
-        console.log(error);
-
-        return null;
-
-      })
+      }), catchError<any, any>(e => this.handleError(e, showMessage))
     );
 
   }
 
   delete<TResponse>(url: string, params: {} = {}, showMessage = false) {
 
-    const paramKeys = Object.keys(params);
-    const httpParams = new HttpParams();
-
-    paramKeys.forEach(k => {
-      httpParams.append(k, params[k]);
-    });
-
     return this.httpClient.delete<TResponse>(this.baseUrl + url, {
       headers: this.httpHeaders,
-      params: httpParams
+      params: params
     }).pipe<TResponse, TResponse>(
 
       map((data: TResponse) => {
@@ -133,17 +97,25 @@ export class HttpService {
 
         return data;
 
-      }), catchError<any, any>(error => {
-
-        if (showMessage)
-          this.toastr.error('خطایی در سیستم رخ داد');
-
-        console.log(error);
-
-        return null;
-
-      })
+      }), catchError<any, any>(e => this.handleError(e, showMessage))
     );
+
+  }
+
+  handleError(error, showMessage: boolean) {
+
+    console.log(error);
+
+    if (showMessage)
+      this.toastr.error('خطایی در سیستم رخ داد');
+
+    if (error && error.error && error.error.ShowError) {
+
+      this.toastr.error(error.error.Message);
+
+      return null;
+
+    }
 
   }
 

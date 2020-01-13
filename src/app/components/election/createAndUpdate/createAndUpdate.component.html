@@ -1,41 +1,43 @@
 <mat-card class="example-card">
-    <mat-card-header>
-        <mat-card-title>انتخابات</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
+  <mat-card-header>
+    <mat-card-title>انتخابات</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
 
-        <form class="row" [formGroup]="electionForm" (ngSubmit)="saveElection()">
+    <form class="row" [formGroup]="electionForm" (ngSubmit)="saveElection()">
 
-            <div class="col-12">
-                <mat-form-field class="w-25">
-                    <input type="text" matInput placeholder="نام" formControlName="name">
-                </mat-form-field>
+      <div class="col-12">
+        <mat-form-field class="w-25">
+          <input type="text" matInput placeholder="نام" formControlName="name">
+        </mat-form-field>
+      </div>
+
+      <div class="col-12">
+        <mat-list class="w-25" formArrayName="candidates">
+          <mat-list-item *ngFor="let candidate of f.candidates.controls;let i = index">
+            <div class="d-flex w-100 justify-content-between align-items-center" [formGroupName]="i">
+              <mat-form-field>
+                <input type="text" matInput placeholder="شناسه کاندیدا" formControlName="candidate" required>
+              </mat-form-field>
+              <i class="fa fa-trash fa-2x pointer text-danger mr-3" (click)="removeCandidate(i)"></i>
             </div>
+          </mat-list-item>
 
-            <div class="col-12">
-                <mat-list class="w-25" formArrayName="candidates">
-                    <mat-list-item *ngFor="let candidate of f.candidates.controls;let i = index">
-                        <div class="d-flex w-100 justify-content-between align-items-center">
-                            <mat-form-field>
-                                <input type="text" matInput placeholder="کاندیدا" [formControlName]="i" required>
-                            </mat-form-field>
-                            <i class="fa fa-trash fa-2x pointer text-danger mr-3" (click)="removeCandidate(i)"></i>
-                        </div>
-                    </mat-list-item>
+          <button [disabled]="f.candidates.invalid" (click)="addCandidate()" class="btn-unstyled" type="button">
+            <i class="fa fa-plus fa-2x text-primary mr-3 mt-3"></i>
+          </button>
 
-                    <button [disabled]="f.candidates.invalid" (click)="addCandidate()" class="btn-unstyled" type="button">
-                        <i class="fa fa-plus fa-2x text-primary mr-3 mt-3"></i>
-                    </button>
+        </mat-list>
+      </div>
 
-                </mat-list>
-            </div>
+      <div class="col-12 d-flex justify-content-end">
+        <button mat-raised-button color="accent" routerLink="/Dashboard/Elections" type="button">بازگشت</button>
 
-            <div class="col-12 d-flex justify-content-end">
-                <button mat-raised-button color="primary" [disabled]="electionForm.invalid" type="submit">
-                    ذخیره
-                </button>
-            </div>
+        <button mat-raised-button color="primary" type="submit" class="mx-2">
+          ذخیره
+        </button>
+      </div>
 
-        </form>
-    </mat-card-content>
+    </form>
+  </mat-card-content>
 </mat-card>

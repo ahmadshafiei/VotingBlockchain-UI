@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { Election } from '../../../model/election/election.model';
 import { ElectionService } from 'src/app/services/election.service';
 import { ElectionSearch } from 'src/app/model/election/electionSearch.model';
+import { ElectionCandidate } from 'src/app/model/election/electionCandidate.model';
 
 @Component({
   selector: 'app-index',
@@ -26,7 +27,7 @@ export class ElectionIndexComponent implements OnInit {
   }
 
   getElections() {
-    
+
     this.electionService.getElections(this.searchFilter).subscribe(e => {
       this.elections = e.items;
       this.searchFilter.totalCount = e.totalCount;
@@ -46,12 +47,14 @@ export class ElectionIndexComponent implements OnInit {
     this.router.navigate(['Dashboard', 'Election']);
   }
 
-  removeElection(address: string) {
-
+  removeElection(electionId: number) {
+    this.electionService.removeElection(electionId).subscribe(() => {
+      this.getElections();
+    });
   }
 
-  editElection(address: string) {
-    this.router.navigate(['Dashboard', 'Election'], { queryParams: { electionAddress: address } });
+  editElection(electionId: number) {
+    this.router.navigate(['Dashboard', 'Election'], { queryParams: { electionId: electionId } });
   }
 
 

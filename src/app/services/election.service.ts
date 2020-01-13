@@ -17,8 +17,8 @@ export class ElectionService {
     return this.httpService.get<PagedResult<Election>>('Election/GetElections', model);
   }
 
-  getElection(address: string) {
-    return this.httpService.get<Election>('Election/GetElection', { address: address });
+  getElection(electionId: number) {
+    return this.httpService.get<Election>('Election/GetElection', { electionId : electionId });
   }
 
   createElection(election: Election) {
