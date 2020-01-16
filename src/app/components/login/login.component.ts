@@ -23,8 +23,12 @@ export class LoginComponent implements OnInit {
   }
 
   login(privateKey: string) {
-    this.profileService.login(privateKey);
-    this.router.navigateByUrl('/Dashboard/Profile');
+
+    this.profileService.getPublicKey(privateKey).subscribe(w => {
+      this.profileService.login(privateKey, w.publicKey);
+      this.router.navigateByUrl('/Dashboard/Profile');
+    });
+
   }
 
   getPrivateKey() {

@@ -11,6 +11,7 @@ export class HttpService {
 
   baseUrl = 'http://localhost:5000/api/'
   privateKey = '';
+  publicKey = '';
   httpHeaders = new HttpHeaders();
 
   constructor(
@@ -19,11 +20,12 @@ export class HttpService {
     private toastr: ToastrService
   ) {
     this.privateKey = cookieService.get('privateKey');
+    this.publicKey = cookieService.get('publicKey');
 
-    if (!this.privateKey)
+    if (!this.privateKey || !this.publicKey)
       toastr.error('شناسه ی کاربری یافت نشد , مجددا وارد شوید')
     else
-      this.httpHeaders = new HttpHeaders({ privateKey: this.privateKey });
+      this.httpHeaders = new HttpHeaders({ PrivateKey: this.privateKey, PublicKey: this.publicKey });
   }
 
   get<TResponse>(url: string, params: {} = {}, showMessage = false): Observable<TResponse> {
@@ -54,7 +56,6 @@ export class HttpService {
 
       map((data: TResponse) => {
 
-        debugger;
         if (showMessage)
           this.toastr.success('درخواست با موفقیت انجام شد');
 
@@ -104,11 +105,6 @@ export class HttpService {
 
   handleError(error, showMessage: boolean) {
 
-    console.log(error);
-
-    if (showMessage)
-      this.toastr.error('خطایی در سیستم رخ داد');
-
     if (error && error.error && error.error.ShowError) {
 
       this.toastr.error(error.error.Message);
@@ -117,6 +113,8 @@ export class HttpService {
 
     }
 
+    if (showMessage)
+      this.toastr.error('خطایی در سیستم رخ داد');
   }
 
 }

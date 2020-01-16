@@ -6,6 +6,7 @@ import { ProfileIndexComponent } from './components/profile/profile-index/profil
 import { ElectionIndexComponent } from './components/election/index/index.component';
 import { DashboardGuard } from './guards/dashboard.guard';
 import { ElectionCreateAndUpdateComponent } from './components/election/createAndUpdate/createAndUpdate.component';
+import { VoteComponent } from './components/vote/vote.component';
 
 
 const routes: Routes = [
@@ -14,6 +15,7 @@ const routes: Routes = [
   {
     path: 'Dashboard', component: DashboardIndexComponent, canActivate: [DashboardGuard], canActivateChild: [DashboardGuard], children: [
       { path: 'Profile', component: ProfileIndexComponent },
+      { path: 'Vote', component: VoteComponent },
       { path: 'Elections', component: ElectionIndexComponent },
       { path: 'Election', component: ElectionCreateAndUpdateComponent }
     ]

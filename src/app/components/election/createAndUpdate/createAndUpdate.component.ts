@@ -6,6 +6,7 @@ import { ElectionService } from 'src/app/services/election.service';
 import { ElectionCandidate } from 'src/app/model/election/electionCandidate.model';
 import { validateHorizontalPosition } from '@angular/cdk/overlay';
 import { ToastrService } from 'ngx-toastr';
+import { debug } from 'util';
 
 @Component({
   selector: 'app-create-update-election',
@@ -16,7 +17,7 @@ export class ElectionCreateAndUpdateComponent implements OnInit {
 
   editMode = false;
 
-  electionForm: FormGroup;
+  electionForm = new FormGroup({});
   election = new Election();
 
   get f() {
@@ -42,8 +43,8 @@ export class ElectionCreateAndUpdateComponent implements OnInit {
         this.election.id = p.electionId;
         this.getElection();
       }
-      else
-        this.initForm();
+
+      this.initForm();
     });
   }
 
@@ -56,11 +57,12 @@ export class ElectionCreateAndUpdateComponent implements OnInit {
 
   initForm() {
     this.electionForm = new FormGroup({
+      'id': new FormControl(this.election.id),
       'name': new FormControl(this.election.name),
       'address': new FormControl(this.election.address),
       'candidates': new FormArray(this.createCandidates(this.election.candidates))
     });
-    console.log(this.electionForm)
+    console.log(this.electionForm);
   }
 
   createCandidates(candidates: ElectionCandidate[]) {
@@ -77,14 +79,16 @@ export class ElectionCreateAndUpdateComponent implements OnInit {
     //push default value of empty
     if (candidates.length == 0)
       formGroups.push(new FormGroup({
-        candidate: new FormControl(null, Validators.required)
+        id: new FormControl(null),
+        electionId: new FormControl(null),
+        candidate: new FormControl('', Validators.required)
       }));
 
     return formGroups;
   }
 
   saveElection() {
-    if (this.validateElection())
+    if (!this.validateElection())
       return;
 
     if (this.editMode)
@@ -94,20 +98,19 @@ export class ElectionCreateAndUpdateComponent implements OnInit {
   }
 
   addCandidate() {
-    const candidates: ElectionCandidate[] = this.f.candidates.value;
-    candidates.push(new ElectionCandidate());
 
-    const fcs = this.formBuilder.array(this.createCandidates(candidates));
+    const fb = this.formBuilder.group({
+      id: null,
+      electionId: this.election.id,
+      candidate: ''
+    });
 
-    this.electionForm.controls.candidates = fcs;
+    (<FormArray>this.electionForm.controls.candidates).push(fb);
+
   }
 
   removeCandidate(candidateIndex: number) {
-    const candidates: ElectionCandidate[] = this.f.candidates.value;
-    candidates.splice(candidateIndex, 1);
-    const fcs = this.formBuilder.array(this.createCandidates(candidates));
-
-    this.electionForm.controls.candidates = fcs;
+    (<FormArray>this.electionForm.controls.candidates).removeAt(candidateIndex);
   }
 
   createElection() {
@@ -128,6 +131,7 @@ export class ElectionCreateAndUpdateComponent implements OnInit {
 
   validateElection() {
     const election: Election = this.electionForm.value;
+
     let isValid = true;
 
     if (!election.name || election.name.length == 0) {

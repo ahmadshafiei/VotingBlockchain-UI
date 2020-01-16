@@ -21,6 +21,10 @@ export class ElectionService {
     return this.httpService.get<Election>('Election/GetElection', { electionId : electionId });
   }
 
+  getUnvotedElections() {
+    return this.httpService.get<Election[]>('Election/GetUnvotedElections');
+  }
+
   createElection(election: Election) {
     return this.httpService.post('Election/CreateElection', election, true);
   }

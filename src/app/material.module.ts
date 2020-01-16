@@ -11,7 +11,8 @@ import { MatPaginatorIntlFa } from './i18n/pagination/matPaginatorIntlFa.service
         m.MatToolbarModule,
         m.MatListModule,
         m.MatPaginatorModule,
-        m.MatTableModule
+        m.MatTableModule,
+        m.MatCheckboxModule
     ],
     exports: [
         m.MatButtonModule,
@@ -20,7 +21,8 @@ import { MatPaginatorIntlFa } from './i18n/pagination/matPaginatorIntlFa.service
         m.MatListModule,
         m.MatToolbarModule,
         m.MatPaginatorModule,
-        m.MatTableModule
+        m.MatTableModule,
+        m.MatCheckboxModule
     ],
     providers: [
         { provide: MatPaginatorIntl, useClass: MatPaginatorIntlFa }
