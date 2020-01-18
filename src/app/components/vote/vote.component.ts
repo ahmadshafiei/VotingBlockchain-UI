@@ -55,3 +55,4 @@ export class VoteComponent implements OnInit {
   }
 
 }
+``

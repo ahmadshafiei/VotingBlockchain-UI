@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardIndexComponent } from './components/dashboard/dashboard-index/dashboard-index.component';
 import { ProfileIndexComponent } from './components/profile/profile-index/profile-index.component';
 import { VoteComponent } from './components/vote/vote.component';
+import { SettingComponent } from './components/setting/setting.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { VoteComponent } from './components/vote/vote.component';
     ElectionCreateAndUpdateComponent,
     VoteComponent,
     DashboardIndexComponent,
-    ProfileIndexComponent
+    ProfileIndexComponent,
+    SettingComponent
   ],
   imports: [
     BrowserModule,

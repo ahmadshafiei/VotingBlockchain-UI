@@ -1,37 +1,38 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
-import { CookieService } from 'ngx-cookie-service';
 import { ToastrService } from 'ngx-toastr';
 import { map, catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
+import { ConfigService } from './config.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
-  baseUrl = 'http://localhost:5000/api/'
-  privateKey = '';
-  publicKey = '';
-  httpHeaders = new HttpHeaders();
+  baseUrl = 'http://localhost:5000/api/';
 
   constructor(
     private httpClient: HttpClient,
-    private cookieService: CookieService,
-    private toastr: ToastrService
+    private configService: ConfigService,
+    private toastr: ToastrService,
+    private router: Router
   ) {
-    this.privateKey = cookieService.get('privateKey');
-    this.publicKey = cookieService.get('publicKey');
-
-    if (!this.privateKey || !this.publicKey)
-      toastr.error('شناسه ی کاربری یافت نشد , مجددا وارد شوید')
-    else
-      this.httpHeaders = new HttpHeaders({ PrivateKey: this.privateKey, PublicKey: this.publicKey });
+    this.setApiPort();
   }
 
-  get<TResponse>(url: string, params: {} = {}, showMessage = false): Observable<TResponse> {
+  setApiPort() {
+    const port = this.configService.getApiPort();
+    if (port)
+      this.baseUrl = 'http://localhost:' + port + '/api/';
+  }
+
+  get<TResponse>(url: string, params: {} = {}, showMessage = false, checkKeys = true): Observable<TResponse> {
 
     return this.httpClient.get<TResponse>(this.baseUrl + url, {
-      headers: this.httpHeaders,
+      headers: this.getHttpHeader(checkKeys),
       params: params,
     }).pipe<TResponse, TResponse>(
 
@@ -51,7 +52,7 @@ export class HttpService {
   post<TResponse>(url: string, body: {} = {}, showMessage = false): Observable<TResponse> {
 
     return this.httpClient.post<TResponse>(this.baseUrl + url, body, {
-      headers: this.httpHeaders
+      headers: this.getHttpHeader()
     }).pipe<TResponse, TResponse>(
 
       map((data: TResponse) => {
@@ -69,7 +70,7 @@ export class HttpService {
   patch<TResponse>(url: string, body: {} = {}, showMessage = false) {
 
     return this.httpClient.patch<TResponse>(this.baseUrl + url, body, {
-      headers: this.httpHeaders
+      headers: this.getHttpHeader()
     }).pipe<TResponse, TResponse>(
 
       map((data: TResponse) => {
@@ -87,7 +88,7 @@ export class HttpService {
   delete<TResponse>(url: string, params: {} = {}, showMessage = false) {
 
     return this.httpClient.delete<TResponse>(this.baseUrl + url, {
-      headers: this.httpHeaders,
+      headers: this.getHttpHeader(),
       params: params
     }).pipe<TResponse, TResponse>(
 
@@ -101,6 +102,19 @@ export class HttpService {
       }), catchError<any, any>(e => this.handleError(e, showMessage))
     );
 
+  }
+
+  getHttpHeader(checkKeys: boolean = true) {
+    debugger;
+    const privateKey = this.configService.getCurrentPrivateKey();
+    const publicKey = this.configService.getCurrentPublicKey();
+    if (checkKeys && (!privateKey || !publicKey)) {
+      this.toastr.error('شناسه ی کاربری یافت نشد , مجددا وارد شوید')
+      this.router.navigateByUrl('/login');
+    }
+
+    else
+      return new HttpHeaders({ PrivateKey: privateKey, PublicKey: publicKey });
   }
 
   handleError(error, showMessage: boolean) {

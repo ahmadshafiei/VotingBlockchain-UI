@@ -1,6 +1,6 @@
 <div *ngIf="unvotedElections.length > 0">
   <div class="row">
-    <div class="col-md-4 col-sm-6 col-12 m-2" *ngFor="let election of unvotedElections">
+    <div class="col-md-4 col-sm-6 col-12 p-2" *ngFor="let election of unvotedElections">
       <mat-card class="election-container">
         <mat-card-header>
           <mat-card-title>{{election.name}}</mat-card-title>
@@ -12,7 +12,6 @@
           <ul class="list-group list-unstyled candidate-container">
             <li *ngFor="let candidate of election.candidates" class="pointer"
               (click)="voteCandidate(election ,candidate)">
-              <!-- {{candidate.isSelectedForVoting}} -->
               <mat-checkbox [ngModel]="candidate.isSelectedForVoting">{{candidate.candidate}}</mat-checkbox>
             </li>
           </ul>

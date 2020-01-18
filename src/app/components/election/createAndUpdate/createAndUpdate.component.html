@@ -19,12 +19,12 @@
               <mat-form-field>
                 <input type="text" matInput placeholder="شناسه کاندیدا" formControlName="candidate" required>
               </mat-form-field>
-              <i class="fa fa-trash fa-2x pointer text-danger mr-3" (click)="removeCandidate(i)"></i>
+              <i class="pointer text-danger mr-3" (click)="removeCandidate(i)">حذف</i>
             </div>
           </mat-list-item>
 
           <button [disabled]="f.candidates.invalid" (click)="addCandidate()" class="btn-unstyled" type="button">
-            <i class="fa fa-plus fa-2x text-primary mr-3 mt-3"></i>
+            <i class="text-primary mr-3 mt-3">اضافه</i>
           </button>
 
         </mat-list>

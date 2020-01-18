@@ -1,26 +1,26 @@
 <div class="row color-white">
 
   <div class="col-sm-12 col-md-6">
-    
+
     <hr data-content="رای های داده شده" class="hr-text">
 
     <mat-list>
-      <mat-list-item> Pepper </mat-list-item>
-      <mat-list-item> Salt </mat-list-item>
-      <mat-list-item> Paprika </mat-list-item>
-     </mat-list>
+      <mat-list-item *ngFor="let participatedElection of participatedElections">
+        رای به شناسه عمومی {{participatedElection.candidate}} در انتخابات {{participatedElection.electionName}}
+      </mat-list-item>
+    </mat-list>
 
   </div>
 
   <div class="col-sm-12 col-md-6 border-right">
-    
+
     <hr data-content="رای های جمع آوری شده" class="hr-text">
 
     <mat-list>
-      <mat-list-item> Pepper </mat-list-item>
-      <mat-list-item> Salt </mat-list-item>
-      <mat-list-item> Paprika </mat-list-item>
-     </mat-list>
+      <mat-list-item *ngFor="let candidatedElection of candidatedElections">
+        {{candidatedElection.electionName}} -> {{candidatedElection.voters.length}}
+      </mat-list-item>
+    </mat-list>
 
   </div>
 

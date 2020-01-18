@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as env from '../../environments/environment';
-import { CookieService } from 'ngx-cookie-service';
 import { HttpService } from './common/http-service.service';
+import { ConfigService } from './common/config.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,23 +13,24 @@ export class ProfileService {
 
   constructor(
     private httpClient: HttpClient,
-    private cookieService: CookieService,
+    private configService: ConfigService,
     private httpService: HttpService
   ) { }
 
   login(privateKey: string, publicKey: string) {
-    this.cookieService.set('privateKey', privateKey);
-    this.cookieService.set('publicKey', publicKey);
+    debugger;
+    this.configService.setPrivateKey(privateKey);
+    this.configService.setPublicKey(publicKey);
   }
 
   logout() {
-    this.cookieService.deleteAll();
+    this.configService.clearConfig();
   }
 
   getPublicKey(privateKey: string) {
     return this.httpService.get<{ publicKey: string }>('Profile/GetPublicKey', {
       privateKey: privateKey
-    });
+    }, false, false);
   }
 
   getNewWallet() {

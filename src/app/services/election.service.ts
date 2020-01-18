@@ -3,6 +3,8 @@ import { HttpService } from './common/http-service.service';
 import { Election } from '../model/election/election.model';
 import { ElectionSearch } from '../model/election/electionSearch.model';
 import { PagedResult } from '../model/common/pagedResult.model';
+import { ParticipatedElection } from '../model/election/participatedElection.model';
+import { CandidatedElection } from '../model/election/candidatedElection.model';
 
 @Injectable({
   providedIn: 'root'
@@ -18,11 +20,19 @@ export class ElectionService {
   }
 
   getElection(electionId: number) {
-    return this.httpService.get<Election>('Election/GetElection', { electionId : electionId });
+    return this.httpService.get<Election>('Election/GetElection', { electionId: electionId });
   }
 
   getUnvotedElections() {
     return this.httpService.get<Election[]>('Election/GetUnvotedElections');
+  }
+
+  getParticipatedElections() {
+    return this.httpService.get<ParticipatedElection[]>('Election/GetParticipatedElections');
+  }
+
+  getCandidatedElections() {
+    return this.httpService.get<CandidatedElection[]>('Election/GetCandidatedElections');
   }
 
   createElection(election: Election) {
