@@ -1,10 +1,12 @@
 <div class="row color-white">
 
-  <div class="col-sm-12 col-md-6">
+  <div class="col-sm-12 col-md-6 text-center">
 
     <hr data-content="رای های داده شده" class="hr-text">
 
-    <mat-list>
+    <span *ngIf="participatedElections.length == 0" class="text-warning">شما در انتخاباتی شرکت نکردید</span>
+
+    <mat-list *ngIf="participatedElections.length > 0">
       <mat-list-item *ngFor="let participatedElection of participatedElections">
         رای به شناسه عمومی {{participatedElection.candidate}} در انتخابات {{participatedElection.electionName}}
       </mat-list-item>
@@ -12,11 +14,13 @@
 
   </div>
 
-  <div class="col-sm-12 col-md-6 border-right">
+  <div class="col-sm-12 col-md-6 text-center">
 
     <hr data-content="رای های جمع آوری شده" class="hr-text">
 
-    <mat-list>
+    <span *ngIf="candidatedElections.length == 0" class="text-warning">شما در انتخاباتی شرکت نکردید</span>
+
+    <mat-list *ngIf="candidatedElections.length > 0">
       <mat-list-item *ngFor="let candidatedElection of candidatedElections">
         {{candidatedElection.electionName}} -> {{candidatedElection.voters.length}}
       </mat-list-item>

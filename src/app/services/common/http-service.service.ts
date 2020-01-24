@@ -6,12 +6,14 @@ import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { environment } from '../../../environments/environment';
 import { ConfigService } from './config.service';
+import { BlockUI, BlockUIService, NgBlockUI } from 'ng-block-ui';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpService {
 
+  @BlockUI() blockUI : NgBlockUI;
   baseUrl = 'http://localhost:5000/api/';
 
   constructor(
@@ -31,12 +33,16 @@ export class HttpService {
 
   get<TResponse>(url: string, params: {} = {}, showMessage = false, checkKeys = true): Observable<TResponse> {
 
+    this.blockUI.start(' ');
+
     return this.httpClient.get<TResponse>(this.baseUrl + url, {
       headers: this.getHttpHeader(checkKeys),
       params: params,
     }).pipe<TResponse, TResponse>(
 
       map((data: TResponse) => {
+
+        this.blockUI.stop();
 
         if (showMessage)
           this.toastr.success('درخواست با موفقیت انجام شد');
@@ -50,12 +56,16 @@ export class HttpService {
   }
 
   post<TResponse>(url: string, body: {} = {}, showMessage = false): Observable<TResponse> {
+    
+    this.blockUI.start(' ');
 
     return this.httpClient.post<TResponse>(this.baseUrl + url, body, {
       headers: this.getHttpHeader()
     }).pipe<TResponse, TResponse>(
 
       map((data: TResponse) => {
+
+        this.blockUI.stop();
 
         if (showMessage)
           this.toastr.success('درخواست با موفقیت انجام شد');
@@ -69,12 +79,16 @@ export class HttpService {
 
   patch<TResponse>(url: string, body: {} = {}, showMessage = false) {
 
+    this.blockUI.start(' ');
+
     return this.httpClient.patch<TResponse>(this.baseUrl + url, body, {
       headers: this.getHttpHeader()
     }).pipe<TResponse, TResponse>(
 
       map((data: TResponse) => {
 
+        this.blockUI.stop();
+        
         if (showMessage)
           this.toastr.success('درخواست با موفقیت انجام شد');
 
@@ -87,6 +101,8 @@ export class HttpService {
 
   delete<TResponse>(url: string, params: {} = {}, showMessage = false) {
 
+    this.blockUI.start(' ');
+
     return this.httpClient.delete<TResponse>(this.baseUrl + url, {
       headers: this.getHttpHeader(),
       params: params
@@ -94,6 +110,8 @@ export class HttpService {
 
       map((data: TResponse) => {
 
+        this.blockUI.stop();
+        
         if (showMessage)
           this.toastr.success('درخواست با موفقیت انجام شد');
 
@@ -105,7 +123,6 @@ export class HttpService {
   }
 
   getHttpHeader(checkKeys: boolean = true) {
-    debugger;
     const privateKey = this.configService.getCurrentPrivateKey();
     const publicKey = this.configService.getCurrentPublicKey();
     if (checkKeys && (!privateKey || !publicKey)) {
@@ -118,6 +135,8 @@ export class HttpService {
   }
 
   handleError(error, showMessage: boolean) {
+
+    this.blockUI.stop();
 
     if (error && error.error && error.error.ShowError) {
 

@@ -17,6 +17,7 @@ import { DashboardIndexComponent } from './components/dashboard/dashboard-index/
 import { ProfileIndexComponent } from './components/profile/profile-index/profile-index.component';
 import { VoteComponent } from './components/vote/vote.component';
 import { SettingComponent } from './components/setting/setting.component';
+import { BlockUIModule } from 'ng-block-ui';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { SettingComponent } from './components/setting/setting.component';
     FormsModule,
     ReactiveFormsModule,
     SweetAlert2Module.forRoot(),
-    ToastrModule.forRoot() 
+    ToastrModule.forRoot(),
+    BlockUIModule.forRoot()
   ],
   providers: [
     CookieService

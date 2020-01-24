@@ -18,7 +18,6 @@ export class ProfileService {
   ) { }
 
   login(privateKey: string, publicKey: string) {
-    debugger;
     this.configService.setPrivateKey(privateKey);
     this.configService.setPublicKey(publicKey);
   }
