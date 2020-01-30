@@ -33,6 +33,7 @@ export class HttpService {
 
   get<TResponse>(url: string, params: {} = {}, showMessage = false, checkKeys = true): Observable<TResponse> {
 
+    this.setApiPort();
     this.blockUI.start(' ');
 
     return this.httpClient.get<TResponse>(this.baseUrl + url, {
@@ -57,6 +58,7 @@ export class HttpService {
 
   post<TResponse>(url: string, body: {} = {}, showMessage = false): Observable<TResponse> {
     
+    this.setApiPort();
     this.blockUI.start(' ');
 
     return this.httpClient.post<TResponse>(this.baseUrl + url, body, {
@@ -79,6 +81,7 @@ export class HttpService {
 
   patch<TResponse>(url: string, body: {} = {}, showMessage = false) {
 
+    this.setApiPort();
     this.blockUI.start(' ');
 
     return this.httpClient.patch<TResponse>(this.baseUrl + url, body, {
@@ -101,6 +104,7 @@ export class HttpService {
 
   delete<TResponse>(url: string, params: {} = {}, showMessage = false) {
 
+    this.setApiPort();
     this.blockUI.start(' ');
 
     return this.httpClient.delete<TResponse>(this.baseUrl + url, {

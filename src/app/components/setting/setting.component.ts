@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from 'src/app/services/common/config.service';
 import { BlockchainService } from 'src/app/services/blockchain.service';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Component({
   selector: 'app-setting',
@@ -14,7 +15,8 @@ export class SettingComponent implements OnInit {
 
   constructor(
     private configService: ConfigService,
-    private blockchainService: BlockchainService
+    private blockchainService: BlockchainService,
+    private profileService: ProfileService
   ) {
 
   }
@@ -34,7 +36,9 @@ export class SettingComponent implements OnInit {
   }
 
   getPublicKey() {
-    this.publicKey = this.configService.getCurrentPublicKey();
+    this.profileService.getPublicKey(this.configService.getCurrentPrivateKey()).subscribe(p => {
+      this.publicKey = p.publicKey;
+    });
   }
 
 }

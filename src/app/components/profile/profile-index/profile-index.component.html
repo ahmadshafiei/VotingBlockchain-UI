@@ -1,28 +1,37 @@
 <div class="row color-white">
 
-  <div class="col-sm-12 col-md-6 text-center">
+  <div class="col-sm-12 col-md-6 text-right">
 
     <hr data-content="رای های داده شده" class="hr-text">
 
     <span *ngIf="participatedElections.length == 0" class="text-warning">شما در انتخاباتی شرکت نکردید</span>
 
     <mat-list *ngIf="participatedElections.length > 0">
-      <mat-list-item *ngFor="let participatedElection of participatedElections">
-        رای به شناسه عمومی {{participatedElection.candidate}} در انتخابات {{participatedElection.electionName}}
+      <mat-list-item *ngFor="let participatedElection of participatedElections" class="my-5 text-break h-auto">
+        رای به شناسه عمومی
+        <br>
+        {{participatedElection.candidate}}
+        <br>
+        در انتخابات {{participatedElection.electionName}}
       </mat-list-item>
     </mat-list>
 
   </div>
 
-  <div class="col-sm-12 col-md-6 text-center">
+  <div class="col-sm-12 col-md-6 text-right">
 
     <hr data-content="رای های جمع آوری شده" class="hr-text">
 
-    <span *ngIf="candidatedElections.length == 0" class="text-warning">شما در انتخاباتی شرکت نکردید</span>
+    <span *ngIf="candidates.length == 0" class="text-warning">شما در انتخاباتی شرکت نکردید</span>
 
-    <mat-list *ngIf="candidatedElections.length > 0">
-      <mat-list-item *ngFor="let candidatedElection of candidatedElections">
-        {{candidatedElection.electionName}} -> {{candidatedElection.voters.length}}
+    <mat-list *ngIf="candidates.length > 0">
+      <mat-list-item *ngFor="let candidatedElection of candidates" class="my-5 text-break h-auto">
+        <dl>
+          <dt>{{candidatedElection.electionName}} </dt>
+          <dd *ngFor="let voter of candidatedElection.voters;let i = index">
+            {{voter}}
+          </dd>
+        </dl>
       </mat-list-item>
     </mat-list>
 

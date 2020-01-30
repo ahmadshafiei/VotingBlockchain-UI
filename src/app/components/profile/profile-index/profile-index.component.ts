@@ -10,8 +10,8 @@ import { CandidatedElection } from 'src/app/model/election/candidatedElection.mo
 })
 export class ProfileIndexComponent implements OnInit {
 
-  participatedElections: ParticipatedElection[] = [];
-  candidatedElections: CandidatedElection[] = [];
+  public participatedElections: ParticipatedElection[] = [];
+  public candidates: CandidatedElection[] = [];
 
   constructor(
     private electionService: ElectionService
@@ -23,11 +23,17 @@ export class ProfileIndexComponent implements OnInit {
   }
 
   getCandidatedElections() {
-    this.electionService.getCandidatedElections().subscribe(e => this.candidatedElections = e);
+    this.electionService.getCandidatedElections().subscribe(e => {
+      this.candidates = e;
+      console.log(this.candidates);
+    });
   }
 
   getParticipatedElections() {
-    this.electionService.getParticipatedElections().subscribe(e => this.participatedElections = e);
+    this.electionService.getParticipatedElections().subscribe(e => {
+      this.participatedElections = e;
+      console.log(this.participatedElections);
+    });
   }
 
 }
