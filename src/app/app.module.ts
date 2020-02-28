@@ -18,6 +18,8 @@ import { ProfileIndexComponent } from './components/profile/profile-index/profil
 import { VoteComponent } from './components/vote/vote.component';
 import { SettingComponent } from './components/setting/setting.component';
 import { BlockUIModule } from 'ng-block-ui';
+import { ChartsModule } from 'ng2-charts';
+import { IndexComponent } from './components/users/index/index.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,8 @@ import { BlockUIModule } from 'ng-block-ui';
     VoteComponent,
     DashboardIndexComponent,
     ProfileIndexComponent,
-    SettingComponent
+    SettingComponent,
+    IndexComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,8 @@ import { BlockUIModule } from 'ng-block-ui';
     ReactiveFormsModule,
     SweetAlert2Module.forRoot(),
     ToastrModule.forRoot(),
-    BlockUIModule.forRoot()
+    BlockUIModule.forRoot(),
+    ChartsModule
   ],
   providers: [
     CookieService

@@ -36,7 +36,7 @@ export class VoteComponent implements OnInit {
 
   voteCandidate(election: Election, candidate: ElectionCandidate) {
     election.candidates.forEach(c => {
-      if (c.candidate !== candidate.candidate)
+      if (c.candidateAddress !== candidate.candidateAddress)
         c.isSelectedForVoting = false
     });
 
@@ -48,11 +48,10 @@ export class VoteComponent implements OnInit {
   vote() {
     const votedElections: Election[] = this.unvotedElections.filter(e => e.candidates.some(c => c.isSelectedForVoting));
 
-    const votes: Vote[] = votedElections.map(e => new Vote(e.address, e.candidates.find(c => c.isSelectedForVoting).candidate));
+    const votes: Vote[] = votedElections.map(e => new Vote(e.address, e.candidates.find(c => c.isSelectedForVoting).candidateAddress));
 
     this.voteService.vote(votes).subscribe(() => this.router.navigateByUrl('/Dashboard/Profile'));
 
   }
 
 }
-``

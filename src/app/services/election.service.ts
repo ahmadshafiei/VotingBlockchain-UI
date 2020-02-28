@@ -5,6 +5,7 @@ import { ElectionSearch } from '../model/election/electionSearch.model';
 import { PagedResult } from '../model/common/pagedResult.model';
 import { ParticipatedElection } from '../model/election/participatedElection.model';
 import { CandidatedElection } from '../model/election/candidatedElection.model';
+import { ElectionVote } from '../model/election/electionVote.model';
 
 @Injectable({
   providedIn: 'root'
@@ -31,9 +32,13 @@ export class ElectionService {
     return this.httpService.get<ParticipatedElection[]>('Election/GetParticipatedElections');
   }
 
-  getCandidatedElections() {
-    return this.httpService.get<CandidatedElection[]>('Election/GetCandidatedElections');
+  getElectionsVotes() {
+    return this.httpService.get<ElectionVote[]>('Election/GetElectionVotes');
   }
+
+  // getCandidatedElections() {
+  //   return this.httpService.get<CandidatedElection[]>('Election/GetCandidatedElections');
+  // }
 
   createElection(election: Election) {
     return this.httpService.post('Election/CreateElection', election, true);
@@ -41,6 +46,14 @@ export class ElectionService {
 
   updateElection(election: Election) {
     return this.httpService.patch('Election/UpdateElection', election, true)
+  }
+
+  closeElection(electionId: number) {
+    return this.httpService.patch('Election/CloseElection', { id: electionId });
+  }
+
+  openElection(electionId: number) {
+    return this.httpService.patch('Election/OpenElection', { id: electionId });
   }
 
   removeElection(electionId: number) {

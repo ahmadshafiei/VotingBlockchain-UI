@@ -13,7 +13,7 @@ import { BlockUI, BlockUIService, NgBlockUI } from 'ng-block-ui';
 })
 export class HttpService {
 
-  @BlockUI() blockUI : NgBlockUI;
+  @BlockUI() blockUI: NgBlockUI;
   baseUrl = 'http://localhost:5000/api/';
 
   constructor(
@@ -56,13 +56,17 @@ export class HttpService {
 
   }
 
-  post<TResponse>(url: string, body: {} = {}, showMessage = false): Observable<TResponse> {
-    
+  post<TResponse>(url: string, body: {} = {}, showMessage = false, applyAuthentication = true): Observable<TResponse> {
+
     this.setApiPort();
     this.blockUI.start(' ');
 
+    let headers = {};
+    if (applyAuthentication)
+      headers = this.getHttpHeader();
+
     return this.httpClient.post<TResponse>(this.baseUrl + url, body, {
-      headers: this.getHttpHeader()
+      headers: headers
     }).pipe<TResponse, TResponse>(
 
       map((data: TResponse) => {
@@ -91,7 +95,7 @@ export class HttpService {
       map((data: TResponse) => {
 
         this.blockUI.stop();
-        
+
         if (showMessage)
           this.toastr.success('درخواست با موفقیت انجام شد');
 
@@ -115,7 +119,7 @@ export class HttpService {
       map((data: TResponse) => {
 
         this.blockUI.stop();
-        
+
         if (showMessage)
           this.toastr.success('درخواست با موفقیت انجام شد');
 

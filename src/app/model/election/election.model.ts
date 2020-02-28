@@ -1,4 +1,5 @@
 import { ElectionCandidate } from './electionCandidate.model';
+import { ElectionStatus } from './electionVote.model';
 
 export class Election {
 
@@ -6,6 +7,7 @@ export class Election {
     name: string;
     address: string;
     insertDate: Date = null;
+    status : ElectionStatus;
     candidates: ElectionCandidate[] = [];
 
 }

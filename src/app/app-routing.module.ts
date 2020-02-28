@@ -8,6 +8,7 @@ import { DashboardGuard } from './guards/dashboard.guard';
 import { ElectionCreateAndUpdateComponent } from './components/election/createAndUpdate/createAndUpdate.component';
 import { VoteComponent } from './components/vote/vote.component';
 import { SettingComponent } from './components/setting/setting.component';
+import { IndexComponent } from './components/users/index/index.component';
 
 
 const routes: Routes = [
@@ -18,6 +19,7 @@ const routes: Routes = [
       { path: 'Setting', component: SettingComponent },
       { path: 'Profile', component: ProfileIndexComponent },
       { path: 'Vote', component: VoteComponent },
+      { path: 'Users', component: IndexComponent },
       { path: 'Elections', component: ElectionIndexComponent },
       { path: 'Election', component: ElectionCreateAndUpdateComponent }
     ]

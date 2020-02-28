@@ -1,40 +1,44 @@
 <div class="row color-white">
 
-  <div class="col-sm-12 col-md-6 text-right">
+  <div class="col-sm-12 col-md-12 text-right mb-4">
 
     <hr data-content="رای های داده شده" class="hr-text">
 
-    <span *ngIf="participatedElections.length == 0" class="text-warning">شما در انتخاباتی شرکت نکردید</span>
+    <span *ngIf="participatedElections.length == 0" class="text-warning text-center d-block w-100">شما در انتخاباتی شرکت نکردید</span>
 
     <mat-list *ngIf="participatedElections.length > 0">
       <mat-list-item *ngFor="let participatedElection of participatedElections" class="my-5 text-break h-auto">
-        رای به شناسه عمومی
-        <br>
-        {{participatedElection.candidate}}
-        <br>
-        در انتخابات {{participatedElection.electionName}}
+        رای به &nbsp; <span data-toggle="tooltip" data-placement="top"
+          [title]="participatedElection.candidateAddress" class="text-primary">{{participatedElection.candidateName}}</span> &nbsp; در
+        انتخابات {{participatedElection.electionName}}
       </mat-list-item>
     </mat-list>
 
   </div>
 
-  <div class="col-sm-12 col-md-6 text-right">
+  <hr data-content="وضعیت انتخابات موجود" class="hr-text w-100">
 
-    <hr data-content="رای های جمع آوری شده" class="hr-text">
+  <span *ngIf="elections.length === 0" class="text-warning text-center w-100">انتخاباتی در حال برگزاری نمی باشد</span>
 
-    <span *ngIf="candidates.length == 0" class="text-warning">شما در انتخاباتی شرکت نکردید</span>
+  <div *ngIf="elections.length > 0" class="row w-100">
+    <div class="election-container col-sm-12 col-md-6 text-right d-flex flex-column" *ngFor="let election of elections">
 
-    <mat-list *ngIf="candidates.length > 0">
-      <mat-list-item *ngFor="let candidatedElection of candidates" class="my-5 text-break h-auto">
-        <dl>
-          <dt>{{candidatedElection.electionName}} </dt>
-          <dd *ngFor="let voter of candidatedElection.voters;let i = index">
-            {{voter}}
-          </dd>
-        </dl>
-      </mat-list-item>
-    </mat-list>
+      <div>
+        <canvas baseChart [options]="pieChartOptions" [data]="election.data" [legend]="'true'"
+          [labels]="election.labels" [chartType]="'pie'">
+        </canvas>
+      </div>
 
+      <span class="text-center mt-2"><b>انتخابات :‌ </b> {{election.election}} </span>
+
+      <i *ngIf="election.electionStatus === 1" data-toggle="tooltip" data-placement="top" title="در حال رای گیری"
+        class="text-success fa-2x fa fa-check-circle election-status"></i>
+      <i *ngIf="election.electionStatus === 2" data-toggle="tooltip" data-placement="top" title="اتمام رای گیری"
+        class="text-danger fa-2x fa fa-times-circle election-status"></i>
+
+    </div>
   </div>
+
+
 
 </div>

@@ -1,27 +1,30 @@
 <div>
-    <mat-toolbar color="primary">
+  <mat-toolbar color="primary">
 
-        <mat-toolbar-row class="justify-content-between">
-            <div class="d-flex">
-                <span class="pointer" routerLink="/Dashboard/Profile">پروفایل </span>
-                <span class="mr-5 pointer" routerLink="/Dashboard/Vote">رای دادن</span>
-                <span class="mx-5 pointer" routerLink="/Dashboard/Elections">انتخابات</span>
-                <span class="pointer" routerLink="/Dashboard/Setting">تنظیمات</span>
-            </div>
+    <mat-toolbar-row class="justify-content-between">
+      <div class="d-flex">
+        <span class="pointer" routerLink="/Dashboard/Profile">پروفایل </span>
+        <span class="mr-5 pointer" routerLink="/Dashboard/Vote">رای دادن</span>
+        <span class="mx-5 pointer" *ngIf="isAdmin" routerLink="/Dashboard/Elections">انتخابات</span>
+        <span class="pointer" [ngClass]="{'ml-5':isAdmin , 'mx-5':!isAdmin}" routerLink="/Dashboard/Users">افراد عضو
+          شده</span>
+        <span class="pointer" routerLink="/Dashboard/Setting">تنظیمات</span>
+      </div>
 
-            <div>
-                <span class="pointer" (click)="logout()">
-                    خروج
-                </span>
-            </div>
+      <div>
+        <span class="ml-3" *ngIf="username"> خوش آمدید {{username}}</span>
+        <span class="pointer" (click)="logout()">
+          خروج
+        </span>
+      </div>
 
-        </mat-toolbar-row>
-    </mat-toolbar>
+    </mat-toolbar-row>
+  </mat-toolbar>
 
 
-    <div class="p-3">
+  <div class="p-3">
 
-        <router-outlet></router-outlet>
+    <router-outlet></router-outlet>
 
-    </div>
+  </div>
 </div>

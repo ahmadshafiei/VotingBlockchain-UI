@@ -57,5 +57,17 @@ export class ElectionIndexComponent implements OnInit {
     this.router.navigate(['Dashboard', 'Election'], { queryParams: { electionId: electionId } });
   }
 
+  closeElection(electionId: number) {
+    this.electionService.closeElection(electionId).subscribe(() => {
+      this.getElections();
+    });
+  }
+
+  openElection(electionId: number) {
+    this.electionService.openElection(electionId).subscribe(() => {
+      this.getElections();
+    });
+  }
+
 
 }

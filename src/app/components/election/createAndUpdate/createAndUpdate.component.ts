@@ -72,7 +72,7 @@ export class ElectionCreateAndUpdateComponent implements OnInit {
       formGroups.push(new FormGroup({
         id: new FormControl(c.id),
         electionId: new FormControl(c.electionId),
-        candidate: new FormControl(c.candidate, Validators.required)
+        candidate: new FormControl(c.candidateAddress, Validators.required)
       }));
     });
 

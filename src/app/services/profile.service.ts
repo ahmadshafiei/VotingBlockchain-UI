@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import * as env from '../../environments/environment';
 import { HttpService } from './common/http-service.service';
 import { ConfigService } from './common/config.service';
+import { User } from '../model/user/user.model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +33,16 @@ export class ProfileService {
     }, false, false);
   }
 
-  getNewWallet() {
-    return this.httpClient.get<{ publicKey: string, privateKey: string }>(this.serverUrl + '/Profile/GetNewWallet');
+  getNewWallet(userInfo: any) {
+    return this.httpService.post<{ publicKey: string, privateKey: string }>('Profile/GetNewWallet', userInfo, true, false);
+  }
+
+  isAdmin() {
+    return this.httpService.get<boolean>('Profile/IsAdmin', { publicKey: this.configService.getCurrentPublicKey() });
+  }
+
+  getUsername() {
+    return this.httpService.get<User>('Profile/GetUsername', { publicKey: this.configService.getCurrentPublicKey() });
   }
 
 }

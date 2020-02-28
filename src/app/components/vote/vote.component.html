@@ -11,8 +11,9 @@
           <span>کاندیدا ها :</span>
           <ul class="list-group list-unstyled candidate-container">
             <li *ngFor="let candidate of election.candidates" class="pointer"
-              (click)="voteCandidate(election ,candidate)">
-              <mat-checkbox [ngModel]="candidate.isSelectedForVoting">{{candidate.candidate}}</mat-checkbox>
+              (click)="voteCandidate(election ,candidate)" data-toggle="tooltip" data-placement="top"
+              [title]="candidate.candidateAddress">
+              <mat-checkbox [ngModel]="candidate.isSelectedForVoting">{{candidate.candidateName}}</mat-checkbox>
             </li>
           </ul>
         </mat-card-content>

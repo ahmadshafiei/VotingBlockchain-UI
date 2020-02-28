@@ -4,6 +4,9 @@ export class ElectionCandidate {
     electionId: number;
     candidate: string;
 
+    candidateAddress : string;
+    candidateName : string;
+
     isSelectedForVoting: boolean = true;
 
 }

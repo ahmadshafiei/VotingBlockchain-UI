@@ -1,11 +1,21 @@
-.vote-container{
+.vote-container {
 
-    height: 400px;
-    max-height: 400px;
-    overflow-y: auto;
-    
+  height: 400px;
+  max-height: 400px;
+  overflow-y: auto;
+
 }
 
-.border-white{
-    border-color: white !important;
+.border-white {
+  border-color: white !important;
+}
+
+.election-container {
+  position: relative;
+}
+
+.election-status {
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
 }
