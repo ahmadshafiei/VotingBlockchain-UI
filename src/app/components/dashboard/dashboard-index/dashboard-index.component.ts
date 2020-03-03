@@ -31,9 +31,7 @@ export class DashboardIndexComponent implements OnInit {
 
   getUsername() {
     this.profileService.getUsername().subscribe(u => {
-      console.log(u);
       this.username = u.name;
-      console.log(this.username);
     });
   }
 
